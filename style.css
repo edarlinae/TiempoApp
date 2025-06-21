@@ -1,0 +1,658 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0f2f7, #bbdefb);
+    color: #333;
+    overflow-x: hidden; /* Evita el scroll horizontal */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza la transición */
+
+    /* Variables para el modo claro */
+    --body-bg-gradient-start: #e0f2f7;
+    --body-bg-gradient-end: #bbdefb;
+    --text-color-primary: #333;
+    --text-color-secondary: #555;
+    --text-color-dark: #2c3e50;
+    --text-color-light: #666;
+    --card-bg-color: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --header-icon-color: #64b5f6;
+    --header-icon-hover-color: #2196f3;
+    --input-group-bg: #f5f5f5;
+    --input-group-border: #e0e0e0;
+    --input-group-focus-border: #64b5f6;
+    --input-group-focus-shadow: rgba(100, 181, 246, 0.2);
+    --input-placeholder-color: #a0a0a0;
+    --recent-city-button-bg: #e3f2fd;
+    --recent-city-button-border: #bbdefb;
+    --recent-city-button-text: #2196f3;
+    --recent-city-button-hover-bg: #bbdefb;
+    --recent-city-button-hover-text: #1976d2;
+    --main-weather-card-bg-gradient-start: #e3f2fd;
+    --main-weather-card-bg-gradient-end: #bbdefb;
+    --hourly-card-bg: #f0f7fb;
+    --hourly-card-shadow: rgba(0, 0, 0, 0.08);
+    --hourly-temp-color: #2196f3;
+    --additional-info-bg: #f8f8f8;
+    --additional-info-shadow: rgba(0, 0, 0, 0.05);
+    --scrollbar-track-color: #f0f7fb;
+    --scrollbar-thumb-color: #bbdefb;
+    --scrollbar-thumb-border-color: #f0f7fb;
+    --scrollbar-thumb-hover-color: #90caf9;
+}
+
+/* Modo Oscuro */
+body.dark-mode {
+    background: linear-gradient(135deg, #2c3e50, #1a2b3c);
+    color: #e0e0e0; /* Color de texto general en modo oscuro */
+
+    --body-bg-gradient-start: #2c3e50;
+    --body-bg-gradient-end: #1a2b3c;
+    --text-color-primary: #e0e0e0;
+    --text-color-secondary: #bbbbbb;
+    --text-color-dark: #f0f0f0;
+    --text-color-light: #aaaaaa;
+    --card-bg-color: #2f4f6c;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --header-icon-color: #90caf9;
+    --header-icon-hover-color: #64b5f6;
+    --input-group-bg: #3d5a73;
+    --input-group-border: #4a6c84;
+    --input-group-focus-border: #90caf9;
+    --input-group-focus-shadow: rgba(144, 202, 249, 0.3);
+    --input-placeholder-color: #bbbbbb;
+    --recent-city-button-bg: #4a6c84;
+    --recent-city-button-border: #6fa0bc;
+    --recent-city-button-text: #e0f2f7;
+    --recent-city-button-hover-bg: #6fa0bc;
+    --recent-city-button-hover-text: #ffffff;
+    --main-weather-card-bg-gradient-start: #3d5a73;
+    --main-weather-card-bg-gradient-end: #4a6c84;
+    --hourly-card-bg: #3d5a73;
+    --hourly-card-shadow: rgba(0, 0, 0, 0.2);
+    --hourly-temp-color: #90caf9;
+    --additional-info-bg: #3d5a73;
+    --additional-info-shadow: rgba(0, 0, 0, 0.2);
+    --scrollbar-track-color: #3d5a73;
+    --scrollbar-thumb-color: #6fa0bc;
+    --scrollbar-thumb-border-color: #3d5a73;
+    --scrollbar-thumb-hover-color: #90caf9;
+}
+
+
+/* Estilos para el contenedor de la primera pantalla (login) */
+.container {
+    background-color: var(--card-bg-color);
+    border-radius: 25px;
+    box-shadow: 0 15px 30px var(--card-shadow);
+    padding: 40px 30px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Suaviza la transición */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    color: var(--text-color-secondary);
+    font-size: 1.1em;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.language-selector-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: var(--input-group-bg);
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.language-selector:hover {
+    background-color: var(--input-group-border);
+}
+
+.lang-text {
+    margin-right: 5px;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px var(--card-shadow);
+    min-width: 150px;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.language-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text-color-primary);
+    font-size: 0.95em;
+    transition: background-color 0.2s ease, color 0.3s ease;
+}
+
+.lang-option:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.lang-option:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.lang-option:hover {
+    background-color: var(--recent-city-button-bg);
+    color: var(--recent-city-button-text);
+}
+
+.logo-section {
+    margin-bottom: 40px;
+}
+
+.cloud-image {
+    width: 120px;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.weather-icon {
+    font-size: 1.2em;
+    vertical-align: middle;
+    margin-right: 8px;
+    color: #fbc02d; /* Este color podría mantenerse constante o cambiarse si se desea un icono solar diferente en modo oscuro */
+}
+
+.logo-section h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    color: var(--text-color-dark);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.logo-section p {
+    color: var(--text-color-light);
+    font-size: 0.95em;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--input-group-bg);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border: 1px solid var(--input-group-border);
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    border-color: var(--input-group-focus-border);
+    box-shadow: 0 0 0 3px var(--input-group-focus-shadow);
+    background-color: var(--card-bg-color); /* Fondo blanco en focus para ambos modos */
+}
+
+.input-group .icon {
+    color: var(--input-placeholder-color);
+    margin-right: 10px;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex-grow: 1;
+    padding: 8px 0;
+    font-size: 1.05em;
+    color: var(--text-color-primary);
+    transition: color 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: var(--input-placeholder-color);
+    transition: color 0.3s ease;
+}
+
+.login-button {
+    background: linear-gradient(45deg, #64b5f6, #2196f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 15px 30px;
+    font-size: 1.15em;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background: linear-gradient(45deg, #2196f3, #1976d2);
+    box-shadow: 0 10px 25px rgba(33, 150, 243, 0.4);
+    transform: translateY(-2px);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+/* ----------------------------------------------------- */
+/* ESTILOS PARA LA SEGUNDA INTERFAZ (weather.html) */
+/* ----------------------------------------------------- */
+
+.weather-container {
+    background-color: var(--card-bg-color);
+    border-radius: 25px;
+    box-shadow: 0 15px 30px var(--card-shadow);
+    padding: 30px 20px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color-secondary);
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.app-title {
+    color: var(--text-color-dark);
+    font-size: 1.4em;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.header-icons span {
+    font-size: 24px;
+    color: var(--header-icon-color);
+    margin-left: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.header-icons span:hover {
+    color: var(--header-icon-hover-color);
+}
+
+/* Estilos para la nueva sección de búsqueda */
+.search-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--input-group-bg);
+    border-radius: 25px; /* Bordes más redondeados para la barra de búsqueda */
+    padding: 8px 15px;
+    border: 1px solid var(--input-group-border);
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.search-input-group:focus-within {
+    border-color: var(--input-group-focus-border);
+    box-shadow: 0 0 0 3px var(--input-group-focus-shadow);
+    background-color: var(--card-bg-color); /* Fondo blanco en focus para ambos modos */
+}
+
+#citySearchInput {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex-grow: 1;
+    padding: 5px 0;
+    font-size: 1em;
+    color: var(--text-color-primary);
+    transition: color 0.3s ease;
+}
+
+#citySearchInput::placeholder {
+    color: var(--input-placeholder-color);
+    transition: color 0.3s ease;
+}
+
+.search-icon {
+    color: var(--header-icon-color);
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.search-icon:hover {
+    color: var(--header-icon-hover-color);
+}
+
+.recent-cities-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que los botones salten de línea */
+}
+
+.recent-city-button {
+    background-color: var(--recent-city-button-bg);
+    color: var(--recent-city-button-text);
+    border: 1px solid var(--recent-city-button-border);
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Evita que el texto del botón se rompa */
+}
+
+.recent-city-button:hover {
+    background-color: var(--recent-city-button-hover-bg);
+    color: var(--recent-city-button-hover-text);
+    box-shadow: 0 2px 5px rgba(33, 150, 243, 0.2);
+}
+
+
+.main-weather-card {
+    background: linear-gradient(135deg, var(--main-weather-card-bg-gradient-start), var(--main-weather-card-bg-gradient-end));
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 20px var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-temp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.location-name {
+    font-size: 1.6em;
+    font-weight: 500;
+    color: var(--text-color-dark);
+    transition: color 0.3s ease;
+}
+
+.current-temp {
+    font-size: 3.5em;
+    font-weight: 700;
+    color: var(--header-icon-hover-color); /* Usar un color que contraste bien */
+    transition: color 0.3s ease;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather-icon-large {
+    width: 100px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.weather-description {
+    font-size: 1.3em;
+    font-weight: 500;
+    color: var(--text-color-primary);
+    text-transform: capitalize;
+    transition: color 0.3s ease;
+}
+
+.feels-like {
+    font-size: 0.95em;
+    color: var(--text-color-light);
+    transition: color 0.3s ease;
+}
+
+.section-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--text-color-dark);
+    text-align: left;
+    width: 100%;
+    margin-bottom: 0;
+    margin-top: 5px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    transition: color 0.3s ease;
+}
+
+.hourly-forecast-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 5px;
+    -webkit-overflow-scrolling: touch;
+    /* Comentar estas líneas para que la barra sea visible, o eliminarlas */
+    /* scrollbar-width: none; */
+    /* -ms-overflow-style: none; */
+}
+
+/* Estilos personalizados para la barra de desplazamiento en navegadores WebKit (Chrome, Safari, Edge) */
+.hourly-forecast-container::-webkit-scrollbar {
+    height: 8px; /* Altura de la barra de desplazamiento horizontal */
+    background-color: var(--scrollbar-track-color); /* Color del fondo de la barra, similar al de las tarjetas o contenedor */
+    border-radius: 10px; /* Bordes redondeados para la barra */
+    transition: background-color 0.3s ease;
+}
+
+.hourly-forecast-container::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color); /* Color del "pulgar" (la parte arrastrable) */
+    border-radius: 10px; /* Bordes redondeados para el pulgar */
+    border: 2px solid var(--scrollbar-thumb-border-color); /* Pequeño borde para que no se pegue al borde de la pista */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.hourly-forecast-container::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover-color); /* Color al pasar el ratón por encima del pulgar */
+}
+
+/* Opcional: Estilos para Firefox (si deseas una personalización más allá del 'auto') */
+/* Nota: Firefox no soporta la personalización tan avanzada como WebKit,
+   'scrollbar-color' permite cambiar el color del pulgar y la pista. */
+.hourly-forecast-container {
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color); /* color-pulgar color-pista para Firefox */
+    scrollbar-width: thin; /* 'auto', 'thin', o 'none' para Firefox */
+    transition: scrollbar-color 0.3s ease;
+}
+
+
+.hourly-card {
+    flex: 0 0 80px; /* Reducir el ancho fijo de cada tarjeta, por ejemplo, a 80px */
+    background-color: var(--hourly-card-bg);
+    border-radius: 15px;
+    padding: 10px 5px; /* Reducir el padding para que el contenido tenga menos espacio */
+    box-shadow: 0 4px 10px var(--hourly-card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Reducir el espacio entre elementos dentro de la tarjeta */
+    color: var(--text-color-primary);
+    font-size: 0.8em; /* Reducir el tamaño de la fuente para que quepa mejor */
+    font-weight: 500;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.hourly-icon {
+    width: 40px; /* Reducir el tamaño del icono, por ejemplo, a 40px */
+    height: auto;
+}
+
+.hourly-temp {
+    font-size: 1em; /* Ajustar el tamaño de la fuente de la temperatura */
+    font-weight: 600;
+    color: var(--hourly-temp-color);
+    transition: color 0.3s ease;
+}
+
+
+.additional-info-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    background: var(--additional-info-bg);
+    border-radius: 20px;
+    padding: 20px 10px;
+    box-shadow: 0 8px 15px var(--additional-info-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+}
+
+.info-icon {
+    font-size: 30px;
+    color: var(--header-icon-color);
+    transition: color 0.3s ease;
+}
+
+.info-label {
+    font-size: 0.85em;
+    color: var(--text-color-light);
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.info-value {
+    font-size: 1.0em;
+    font-weight: 600;
+    color: var(--text-color-dark);
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+@media (max-width: 600px) {
+    .container, .weather-container {
+        border-radius: 0;
+        height: 100vh;
+        width: 100%;
+        box-shadow: none;
+        padding: 30px 20px;
+    }
+    body {
+        align-items: flex-start;
+    }
+
+    .app-header {
+        font-size: 1em;
+    }
+
+    .app-title {
+        font-size: 1.2em;
+    }
+
+    .header-icons span {
+        font-size: 20px;
+        margin-left: 10px;
+    }
+
+    .current-temp {
+        font-size: 3em;
+    }
+
+    .weather-icon-large {
+        width: 80px;
+    }
+
+    .weather-description {
+        font-size: 1.1em;
+    }
+
+    .section-title {
+        font-size: 1.2em;
+    }
+
+    .hourly-card {
+        flex: 0 0 70px; /* Un poco más pequeño para móviles si es necesario */
+        padding: 8px 4px;
+        font-size: 0.75em;
+    }
+
+    .hourly-icon {
+        width: 35px; /* Iconos más pequeños en móvil */
+    }
+
+    .hourly-temp {
+        font-size: 0.9em;
+    }
+
+    .info-icon {
+        font-size: 24px;
+    }
+
+    .info-label {
+        font-size: 0.8em;
+    }
+
+    .info-value {
+        font-size: 0.9em;
+    }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - Pronóstico 5 Días</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="weather-container">
+        <div class="app-header">
+            <span class="app-title">Weather App</span>
+            <div class="header-icons">
+                <span class="material-icons refresh-icon" id="refreshForecast">refresh</span>
+                <span class="material-icons theme-toggle" id="themeToggleForecast">light_mode</span>
+                <span class="material-icons back-arrow" id="backToWeather">arrow_back</span>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="forecastCityName">Cargando Ciudad...</h2>
+
+        <div id="fiveDayForecastContent">
+            </div>
+
+    </div>
+    <script src="forecast-script.js"></script>
+</body>
+</html>

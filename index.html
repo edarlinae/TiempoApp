@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - Inicio de Sesión</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="greeting" id="greetingText">Hola de nuevo!</span>
+            <div class="language-selector-wrapper">
+                <div class="language-selector" id="languageSelector">
+                    <span class="lang-text" id="langText">Idioma</span>
+                    <span class="material-icons">language</span>
+                </div>
+                <div class="language-dropdown" id="languageDropdown">
+                    <div class="lang-option" data-lang="en">English</div>
+                    <div class="lang-option" data-lang="es">Español</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="logo-section">
+            <img src="icon_nube.png" alt="Icono de nube" class="cloud-image">
+            <h1><span class="material-icons weather-icon">wb_sunny</span> Weather App</h1>
+            <p id="taglineText">Inicia sesión para acceder a tu panel personalizado</p>
+        </div>
+
+        <div class="form-section">
+            <div class="input-group">
+                <span class="material-icons icon">mail_outline</span>
+                <input type="email" placeholder="Correo electrónico" id="emailPlaceholder">
+            </div>
+            <div class="input-group">
+                <span class="material-icons icon">lock</span>
+                <input type="password" placeholder="Contraseña" id="passwordPlaceholder">
+            </div>
+            <button class="login-button" id="loginButton">Iniciar Sesión</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
