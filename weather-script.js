@@ -211,7 +211,7 @@ function updateWeatherUI(currentData, forecastData, cityName) {
         additionalInfoTitle.textContent = weatherTranslations[lang].additional_info_title;
     }
 
-    if (fiveDayForecastButton) { // Actualizar texto del botón de 5 días
+    if (fiveDayForecastButton) {
         fiveDayForecastButton.textContent = weatherTranslations[lang].five_day_forecast;
     }
 }

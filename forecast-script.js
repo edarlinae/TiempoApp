@@ -1,6 +1,4 @@
-// forecast-script.js
-
-const API_KEY = '39f6c94ee91287c021c88c8620a56aab'; // Tu API Key
+const API_KEY = ''; // Reemplaza con tu clave de API de OpenWeatherMap
 const forecastCityName = document.getElementById('forecastCityName');
 const fiveDayForecastContent = document.getElementById('fiveDayForecastContent');
 const themeToggleForecast = document.getElementById('themeToggleForecast');
@@ -8,7 +6,7 @@ const backToWeather = document.getElementById('backToWeather');
 const refreshForecast = document.getElementById('refreshForecast');
 const body = document.body;
 
-let currentForecastLocation = null; // Para almacenar la ubicación actual de esta página
+let currentForecastLocation = null; 
 
 // Definir las traducciones para esta interfaz
 const forecastTranslations = {
@@ -67,15 +65,15 @@ function getWeatherIconUrl(iconCode) {
 
 
 function getCurrentLanguage() {
-    return document.documentElement.lang || 'es'; // Por defecto español
+    return document.documentElement.lang || 'es'; 
 }
 
 
 // Función para obtener y mostrar el pronóstico de 5 días
 async function getFiveDayForecast(latitude, longitude, cityName) {
     const lang = getCurrentLanguage();
-    forecastCityName.textContent = cityName; // Mostrar el nombre de la ciudad cargando
-    fiveDayForecastContent.innerHTML = ''; // Limpiar contenido anterior
+    forecastCityName.textContent = cityName;
+    fiveDayForecastContent.innerHTML = ''; 
 
     const FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&lang=${lang}&appid=${API_KEY}`;
 
@@ -98,13 +96,13 @@ async function getFiveDayForecast(latitude, longitude, cityName) {
 }
 
 function displayFiveDayForecast(forecastData, lang) {
-    fiveDayForecastContent.innerHTML = ''; // Limpiar antes de renderizar
+    fiveDayForecastContent.innerHTML = ''; 
 
     const dailyData = {};
 
     forecastData.list.forEach(item => {
         const date = new Date(item.dt * 1000);
-        const dateString = date.toISOString().split('T')[0]; // YYYY-MM-DD
+        const dateString = date.toISOString().split('T')[0]; 
 
         if (!dailyData[dateString]) {
             dailyData[dateString] = [];
@@ -114,7 +112,7 @@ function displayFiveDayForecast(forecastData, lang) {
 
     const sortedDates = Object.keys(dailyData).sort();
 
-    sortedDates.slice(0, 5).forEach((dateString, index) => { // Mostrar solo los próximos 5 días
+    sortedDates.slice(0, 5).forEach((dateString, index) => { 
         const dailyItems = dailyData[dateString];
         const date = new Date(dateString);
 
@@ -126,7 +124,7 @@ function displayFiveDayForecast(forecastData, lang) {
         } else {
             // Formatear la fecha para los días siguientes
             dayTitle = date.toLocaleDateString(lang, { weekday: 'long', day: 'numeric', month: 'long' });
-            dayTitle = dayTitle.charAt(0).toUpperCase() + dayTitle.slice(1); // Capitalizar la primera letra
+            dayTitle = dayTitle.charAt(0).toUpperCase() + dayTitle.slice(1); 
         }
 
         const daySection = document.createElement('div');
@@ -146,7 +144,7 @@ function displayFiveDayForecast(forecastData, lang) {
             const formattedTime = time;
 
             const hourlyCard = document.createElement('div');
-            hourlyCard.classList.add('hourly-card'); // Reutilizar la clase hourly-card
+            hourlyCard.classList.add('hourly-card'); 
             hourlyCard.innerHTML = `
                 <span class="hourly-time">${formattedTime}</span>
                 <img src="${getWeatherIconUrl(hourData.weather[0].icon)}" alt="${hourData.weather[0].description}" class="hourly-icon">
@@ -167,12 +165,12 @@ function applyThemeForecast(isDarkMode) {
         body.classList.remove('dark-mode');
         themeToggleForecast.textContent = 'light_mode';
     }
-    localStorage.setItem('darkMode', isDarkMode); // Guardar preferencia en localStorage
+    localStorage.setItem('darkMode', isDarkMode); 
 }
 
 function loadThemePreferenceForecast() {
     const savedTheme = localStorage.getItem('darkMode');
-    const isDarkMode = savedTheme === 'true'; // Si no hay nada o es 'false', será false (modo claro)
+    const isDarkMode = savedTheme === 'true'; 
     applyThemeForecast(isDarkMode);
 }
 
@@ -186,7 +184,7 @@ if (themeToggleForecast) {
 
 if (backToWeather) {
     backToWeather.addEventListener('click', () => {
-        window.location.href = 'weather.html'; // Volver a la página principal del tiempo
+        window.location.href = 'weather.html'; 
     });
 }
 
@@ -202,13 +200,13 @@ if (refreshForecast) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadThemePreferenceForecast(); // Cargar la preferencia de tema al inicio
+    loadThemePreferenceForecast(); 
 
     // Recuperar la ubicación actual del localStorage
     const storedLocation = localStorage.getItem('currentLocation');
     if (storedLocation) {
         currentForecastLocation = JSON.parse(storedLocation);
-        document.documentElement.lang = getCurrentLanguage(); // Asegurar que el idioma esté configurado
+        document.documentElement.lang = getCurrentLanguage(); 
         getFiveDayForecast(currentForecastLocation.lat, currentForecastLocation.lon, currentForecastLocation.name);
     } else {
         forecastCityName.textContent = "No se encontró ubicación.";

@@ -6,7 +6,7 @@ const translations = {
         email: 'Correo electrónico',
         password: 'Contraseña',
         login: 'Iniciar Sesión',
-        // Aunque estas no se usan en index.html, es buena práctica tenerlas para consistencia
+        
         location_placeholder: 'Ubicación',
         temp_placeholder: 'Temperatura',
         description_placeholder: 'Descripción',
@@ -24,7 +24,7 @@ const translations = {
         email: 'Email address',
         password: 'Password',
         login: 'Log In',
-        // Aunque estas no se usan en index.html, es buena práctica tenerlas para consistencia
+        
         location_placeholder: 'Location',
         temp_placeholder: 'Temperature',
         description_placeholder: 'Description',
@@ -81,9 +81,8 @@ langOptions.forEach(option => {
 
 // Funcionalidad de redirección al hacer clic en Iniciar Sesión
 loginButton.addEventListener('click', () => {
-    // Aquí podrías añadir validación de correo/contraseña antes de redirigir
-    // Por ahora, solo redirigimos directamente
-    window.location.href = 'weather.html'; // Redirige a la nueva interfaz del tiempo
+    // Aquí podrías añadir validación de correo/contraseña antes de redirigir (solo redirigimos directamente)
+    window.location.href = 'weather.html'; 
 });
 
 document.addEventListener('DOMContentLoaded', updateContent);
