@@ -1,8 +1,6 @@
-// weather-script.js
-
-const API_KEY = '39f6c94ee91287c021c88c8620a56aab'; // Tu API Key
-let currentLatitude = 39.9868; // Latitud inicial de Castellón de la Plana
-let currentLongitude = -0.0456; // Longitud inicial de Castellón de la Plana
+const API_KEY = 'API_KEY'; // Reemplaza con tu clave de API de OpenWeatherMap
+let currentLatitude = 39.9868; 
+let currentLongitude = -0.0456; 
 
 // Elementos del DOM para actualizar
 const locationName = document.querySelector('.location-name');
@@ -14,22 +12,21 @@ const hourlyForecastContainer = document.querySelector('.hourly-forecast-contain
 const humidityValue = document.querySelector('.info-item:nth-child(1) .info-value');
 const windSpeedValue = document.querySelector('.info-item:nth-child(2) .info-value');
 const pressureValue = document.querySelector('.info-item:nth-child(3) .info-value');
-const backArrow = document.querySelector('.back-arrow'); // Botón de flecha hacia atrás
-const refreshIcon = document.querySelector('.refresh-icon'); // Botón de refrescar
-const themeToggle = document.getElementById('themeToggle'); // Nuevo: Botón para cambiar tema
-const body = document.body; // Referencia al body para aplicar la clase
+const backArrow = document.querySelector('.back-arrow'); 
+const refreshIcon = document.querySelector('.refresh-icon'); 
+const themeToggle = document.getElementById('themeToggle'); 
+const body = document.body; 
 
 
 // Nuevos elementos para la búsqueda y ciudades recientes
 const citySearchInput = document.getElementById('citySearchInput');
 const searchCityButton = document.getElementById('searchCityButton');
 const recentCitiesContainer = document.getElementById('recentCitiesContainer');
-const fiveDayForecastButton = document.getElementById('fiveDayForecastButton'); // Nuevo botón
+const fiveDayForecastButton = document.getElementById('fiveDayForecastButton'); 
 
 const MAX_RECENT_CITIES = 3;
-let recentCities = []; // Array para almacenar las ciudades recientes
+let recentCities = [];
 
-// Definir las traducciones directamente en este script para la segunda interfaz
 const weatherTranslations = {
     'es': {
         feels_like: 'Sensación térmica:',
@@ -38,8 +35,8 @@ const weatherTranslations = {
         pressure: 'Presión',
         hourly_forecast_title: 'Pronóstico por Horas',
         additional_info_title: 'Información Adicional',
-        location_name: 'Castellón', // Nombre de la ciudad por defecto
-        five_day_forecast: 'Pronóstico 5 Días' // Nuevo: Texto del botón
+        location_name: 'Castellón', 
+        five_day_forecast: 'Pronóstico 5 Días' 
     },
     'en': {
         feels_like: 'Feels like:',
@@ -48,14 +45,14 @@ const weatherTranslations = {
         pressure: 'Pressure',
         hourly_forecast_title: 'Hourly Forecast',
         additional_info_title: 'Additional Information',
-        location_name: 'Castellon', // Nombre de la ciudad por defecto
-        five_day_forecast: '5 Day Forecast' // Nuevo: Texto del botón
+        location_name: 'Castellon',
+        five_day_forecast: '5 Day Forecast' 
     }
 };
 
 // Función para obtener el idioma actual del documento
 function getCurrentLanguage() {
-    return document.documentElement.lang || 'es'; // Por defecto español si no está definido
+    return document.documentElement.lang || 'es';
 }
 
 // Mapeo de códigos de icono de OpenWeatherMap a tus nombres de archivo de iconos personalizados
@@ -151,10 +148,9 @@ async function getWeatherData(latitude, longitude, cityName = null) {
         const forecastData = await forecastResponse.json();
         console.log('Datos de pronóstico recibidos:', forecastData);
 
-        // Usar el nombre de la ciudad obtenido de geocoding o de currentData
         const displayCityName = cityName || currentWeatherData.name;
         updateWeatherUI(currentWeatherData, forecastData, displayCityName);
-        addRecentCity(displayCityName, latitude, longitude); // Guardar la ciudad en recientes
+        addRecentCity(displayCityName, latitude, longitude); 
 
         // Guardar la ubicación actual para la página de pronóstico de 5 días
         localStorage.setItem('currentLocation', JSON.stringify({
@@ -172,21 +168,19 @@ async function getWeatherData(latitude, longitude, cityName = null) {
 function updateWeatherUI(currentData, forecastData, cityName) {
     const lang = getCurrentLanguage();
 
-    locationName.textContent = cityName; // Usar el nombre de la ciudad pasado
+    locationName.textContent = cityName; 
     currentTemp.textContent = `${Math.round(currentData.main.temp)}°C`;
     weatherIconLarge.src = getWeatherIconUrl(currentData.weather[0].icon);
     weatherIconLarge.alt = currentData.weather[0].description;
     weatherDescription.textContent = currentData.weather[0].description;
     feelsLike.textContent = `${weatherTranslations[lang].feels_like} ${Math.round(currentData.main.feels_like)}°C`;
 
-    hourlyForecastContainer.innerHTML = ''; // Limpiar pronósticos anteriores
-
-    // Ajusta el número para mostrar más o menos pronósticos (ej: 8 para 24 horas)
-    const hourlyForecasts = forecastData.list.slice(0, 8); // Obtener las primeras 8 entradas
+    hourlyForecastContainer.innerHTML = ''; 
+    const hourlyForecasts = forecastData.list.slice(0, 8); 
 
     hourlyForecasts.forEach(hourData => {
-        const date = new Date(hourData.dt * 1000); // Convertir de UNIX timestamp a milisegundos
-        const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Formato HH:MM
+        const date = new Date(hourData.dt * 1000);
+        const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
         const formattedTime = time;
 
         const hourlyCard = document.createElement('div');
@@ -263,7 +257,7 @@ function renderRecentCities() {
             currentLatitude = city.lat;
             currentLongitude = city.lon;
             getWeatherData(currentLatitude, currentLongitude, city.name);
-            citySearchInput.value = ''; // Limpiar la barra de búsqueda
+            citySearchInput.value = ''; 
         });
         recentCitiesContainer.appendChild(button);
     });
@@ -273,17 +267,16 @@ function renderRecentCities() {
 function applyTheme(isDarkMode) {
     if (isDarkMode) {
         body.classList.add('dark-mode');
-        themeToggle.textContent = 'dark_mode'; // Cambiar icono a luna
+        themeToggle.textContent = 'dark_mode'; 
     } else {
         body.classList.remove('dark-mode');
-        themeToggle.textContent = 'light_mode'; // Cambiar icono a sol
+        themeToggle.textContent = 'light_mode'; 
     }
-    localStorage.setItem('darkMode', isDarkMode); // Guardar preferencia
+    localStorage.setItem('darkMode', isDarkMode); 
 }
 
 function loadThemePreference() {
     const savedTheme = localStorage.getItem('darkMode'); //
-    // Por defecto, modo claro si no hay preferencia guardada o si es 'false'
     const isDarkMode = savedTheme === 'true'; //
     applyTheme(isDarkMode); //
 }
@@ -297,7 +290,7 @@ searchCityButton.addEventListener('click', async () => {
             currentLatitude = cityInfo.lat;
             currentLongitude = cityInfo.lon;
             getWeatherData(currentLatitude, currentLongitude, cityInfo.name);
-            citySearchInput.value = ''; // Limpiar la barra de búsqueda después de la búsqueda
+            citySearchInput.value = ''; 
         }
     } else {
         alert('Por favor, introduce un nombre de ciudad.');
@@ -306,34 +299,32 @@ searchCityButton.addEventListener('click', async () => {
 
 citySearchInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-        searchCityButton.click(); // Simula un clic en el botón de búsqueda
+        searchCityButton.click(); 
     }
 });
 
 if (backArrow) {
     backArrow.addEventListener('click', () => {
-        window.history.back(); // Vuelve a la página anterior (index.html)
+        window.history.back(); 
     });
 }
 
 if (refreshIcon) {
     refreshIcon.addEventListener('click', () => {
-        // Recarga los datos para la ciudad actual
         getWeatherData(currentLatitude, currentLongitude, locationName.textContent);
     });
 }
 
-if (themeToggle) { // Asegurarse de que el elemento existe
+if (themeToggle) { 
     themeToggle.addEventListener('click', () => { //
         const isDarkMode = body.classList.contains('dark-mode'); //
-        applyTheme(!isDarkMode); // Alternar el tema
+        applyTheme(!isDarkMode); 
     });
 }
 
-// Nuevo: Event listener para el botón de pronóstico de 5 días
+// Event listener para el botón de pronóstico de 5 días
 if (fiveDayForecastButton) {
     fiveDayForecastButton.addEventListener('click', () => {
-        // Redirigir a la nueva página de pronóstico de 5 días
         window.location.href = 'forecast.html';
     });
 }
@@ -341,9 +332,8 @@ if (fiveDayForecastButton) {
 
 // Cargar los datos del clima para la ciudad inicial (Castellón) o la última buscada al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    loadThemePreference(); // Cargar la preferencia de tema al inicio
-    loadRecentCities(); // Cargar ciudades recientes al inicio
-    // Si hay ciudades recientes, cargar la primera. Si no, usar Castellón por defecto.
+    loadThemePreference(); 
+    loadRecentCities(); 
     if (recentCities.length > 0) {
         currentLatitude = recentCities[0].lat;
         currentLongitude = recentCities[0].lon;
